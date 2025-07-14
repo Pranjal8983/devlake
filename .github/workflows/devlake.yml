@@ -72,8 +72,8 @@ jobs:
       #     git-branch: "main"
       #     github-token: ${{ secrets.REPO_TOKEN }}
         
-      - name: Terraform Plan
-        run: terraform plan
+      #- name: Terraform Plan
+       # run: terraform plan
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve
