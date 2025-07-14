@@ -103,11 +103,7 @@ resource "aws_instance" "ec2"{
     subnet_id = aws_subnet.public.id
     vpc_security_group_ids = aws_security_group.security_group.id
     associate_public_ip_address = true
-    user_data = file("${path.module}/userdata-0.sh")
-    tags = {
-      Name = "Instance-0"
-    }
-}
+ }
 resource "aws_lb" "this" {
   name               = newalb
   internal           = false
