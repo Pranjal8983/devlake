@@ -5,7 +5,7 @@ on:
     paths:
       - 'devlake/**'
       - '.github/workflows/devlake.yml'
-    branches: main-1
+    branches: main
   
 permissions:
   id-token: write
