@@ -97,7 +97,7 @@ provider "aws" {
     region = "us-east-1"
 }
 # EC2 Instances
-resource "aws_instance" "app1" {
+resource "aws_instance" "ec2" {
   ami                         = "ami-05ffe3c48a9991133"
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.public.id
