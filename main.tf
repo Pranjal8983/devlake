@@ -2,16 +2,12 @@ resource "aws_vpc" "main" {
   cidr_block           = 10.0.0.0/16
   enable_dns_support   = true
   enable_dns_hostnames = true
-  tags = {
-    Name = "${var.vpc_name}"
-  }
+  
 }
 
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
-  tags = {
-    Name = "${var.vpc_name}-igw"
-  }
+  
 }
 
 resource "aws_subnet" "public" {
@@ -19,18 +15,14 @@ resource "aws_subnet" "public" {
   cidr_block              = "10.0.1.0/24"
   availability_zone       = "us-east-1a"
   map_public_ip_on_launch = true
-  tags = {
-    Name = "${var.vpc_name}-public-${count.index}"
-  }
+ 
 }
 
 resource "aws_subnet" "private" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.2.0/24"
   availability_zone = "us-east-1b"
-  tags = {
-    Name = "${var.vpc_name}-private-${count.index}"
-  }
+ 
 }
 
 resource "aws_route_table" "public" {
@@ -39,9 +31,7 @@ resource "aws_route_table" "public" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.igw.id
   }
-  tags = {
-    Name = "${var.vpc_name}-public-rt"
-  }
+ 
 }
 
 resource "aws_route_table_association" "public" {
@@ -108,10 +98,10 @@ provider "aws" {
 }
 
 resource "aws_instance" "ec2"{
-    ami = var.ami_id
+    ami = ami-0150ccaf51ab55a51
     instance_type = "t2.medium"
-    subnet_id = var.public_subnets[0]
-    vpc_security_group_ids = [var.sg_id]
+    subnet_id = aws_subnet.public.id
+    vpc_security_group_ids = aws_security_group.security_group.id
     associate_public_ip_address = true
     user_data = file("${path.module}/userdata-0.sh")
     tags = {
@@ -119,20 +109,18 @@ resource "aws_instance" "ec2"{
     }
 }
 resource "aws_lb" "this" {
-  name               = var.name
+  name               = newalb
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [var.alb_sg_id]
-  subnets            = var.public_subnets
+  security_groups    = aws_security_group.security_group.id
+  subnets            = aws_subnet.public.id
 
-  tags = {
-    Name = var.name
-  }
+ 
 }
 
 # Target Groups
 resource "aws_lb_target_group" "default" {
-  name     = "${var.name}-tg-default"
+  name     = "new-tg-default"
   port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
@@ -154,6 +142,6 @@ resource "aws_lb_listener" "http" {
 
 resource "aws_lb_target_group_attachment" "default" {
   target_group_arn = aws_lb_target_group.default.arn
-  target_id        = var.instance_ids
+  target_id        = aws_instance.ec2.id
   port             = 4000
 }
