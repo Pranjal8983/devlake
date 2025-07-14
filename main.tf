@@ -117,11 +117,10 @@ resource "aws_lb" "this" {
   name               = "newalb"
   internal           = false
   load_balancer_type = "application"
-  security_groups = [aws_security_group.security_group.id]
-  subnets = [aws_subnet.public.id, aws_subnet.public_a.id]
-
- 
+  security_groups    = [aws_security_group.security_group.id]
+  subnets            = [aws_subnet.public_a.id]
 }
+
 
 # Target Groups
 resource "aws_lb_target_group" "default" {
