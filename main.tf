@@ -1,8 +1,8 @@
 module "ec2" {
   source         = "./modules/ec2"
   ami_id         = var.ami_id
-  vpc_id         = aws_vpc.main.id
-  sg_id          = aws_security_group.security_group.id
+  vpc_id         = module.vpc.vpc_id
+  sg_id          = module.security_group.sg_id
   public_subnets = module.vpc.public_subnet_ids
 }
 
@@ -20,7 +20,6 @@ module "security_group" {
   source = "./modules/security-group"
   vpc_id = module.vpc.vpc_id
 }
-
 
 module "alb" {
   source         = "./modules/alb"
