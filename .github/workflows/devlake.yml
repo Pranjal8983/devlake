@@ -1,0 +1,53 @@
+name: Terraform usecse4 devlake project
+
+on:
+  workflow_dispatch:
+    paths:
+      - 'devlake/**'
+      - '.github/workflows/devlake.yml'
+    branches: main-1
+  
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform-uc3:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: devlake
+
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4.2.2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2.0.3
+
+      - name: SetUp AWS
+        uses: aws-actions/configure-aws-credentials@v4.1.0
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.OIDC_ROLE }}
+
+      - name: Create terraform.tfvars
+        run: |
+          cat <<EOF > terraform.tfvars
+          ami_id          = "ami-0803576f0c0169402"
+          vpc_cidr        = "10.0.0.0/16"
+          public_subnets  = ["10.0.11.0/24", "10.0.12.0/24"]
+          private_subnets = ["10.0.21.0/24", "10.0.22.0/24"]
+          azs             = ["eu-west-1a", "eu-west-1b"]
+          region          = "eu-west-1"
+          vpc_name        = "Custom-VPC"
+          EOF
+
+      - name: Run implement terraform
+        run: |
+          terraform init
+          terraform fmt
+          terraform validate
+          terraform plan -var-file=terraform.tfvars
+          terraform destroy -var-file=terraform.tfvars -auto-approve
