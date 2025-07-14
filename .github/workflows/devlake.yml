@@ -11,6 +11,9 @@ permissions:
 jobs:
   terraform-devlake:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: devlake
 
     steps:
       - name: Code checkout
