@@ -107,7 +107,7 @@ resource "aws_instance" "ec2" {
 
 
 resource "aws_lb" "this" {
-  name               = newalb
+  name               = "newalb"
   internal           = false
   load_balancer_type = "application"
   security_groups    = aws_security_group.security_group.id
