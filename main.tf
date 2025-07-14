@@ -20,7 +20,7 @@ resource "aws_subnet" "public" {
 resource "aws_subnet" "public_a" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.2.0/24"
-  availability_zone       = "us-east-1a"
+  availability_zone       = "us-east-1b"
   map_public_ip_on_launch = true
  
 }
@@ -41,11 +41,17 @@ resource "aws_route_table" "public" {
  
 }
 
-resource "aws_route_table_association" "public" {
-  count          = length(aws_subnet.public)
+resource "aws_route_table_association" "public_1" {
   subnet_id      = aws_subnet.public.id
   route_table_id = aws_route_table.public.id
 }
+
+resource "aws_route_table_association" "public_2" {
+  subnet_id      = aws_subnet.public_a.id
+  route_table_id = aws_route_table.public.id
+}
+
+
 resource "aws_security_group" "security_group" {
   name        = "uc1-sg"
   description = "Allow HTTP traffic only from ALB"
@@ -110,6 +116,15 @@ resource "aws_instance" "ec2" {
   subnet_id                   = aws_subnet.public.id
   vpc_security_group_ids      = [aws_security_group.alb_security_group.id]
   associate_public_ip_address = true
+}
+
+
+resource "aws_lb" "this" {
+  name               = "newalb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.security_group.id]
+  subnets = ["aws_subnet.public.id, aws_subnet.public_a.id"]
 }
 
 
