@@ -1,5 +1,5 @@
 resource "aws_security_group" "security_group" {
-  name        = "uc4-sg"
+  name        = "uc1-sg"
   description = "Allow HTTP traffic only from ALB"
   vpc_id      = var.vpc_id
 
@@ -33,7 +33,7 @@ resource "aws_security_group" "security_group" {
 }
 
 resource "aws_security_group" "alb_security_group" {
-  name        = "uc4-alb-sg"
+  name        = "uc1-alb-sg"
   description = "Allow HTTP traffic only from ALB"
   vpc_id      = var.vpc_id
 
