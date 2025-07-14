@@ -2,9 +2,6 @@ name: Terraform usecse4 devlake project
 
 on:
   push:
-    paths:
-      - 'devlake/'
-      - '.github/workflows/devlake.yml'
     branches: main
   
 permissions:
