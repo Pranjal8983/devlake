@@ -1,7 +1,7 @@
 name: Terraform usecse4 devlake project
 
 on:
-  workflow_dispatch:
+  push:
     paths:
       - 'devlake/**'
       - '.github/workflows/devlake.yml'
@@ -12,7 +12,7 @@ permissions:
   contents: read
 
 jobs:
-  terraform-uc3:
+  terraform-devlake:
     runs-on: ubuntu-latest
 
     defaults:
@@ -39,8 +39,8 @@ jobs:
           vpc_cidr        = "10.0.0.0/16"
           public_subnets  = ["10.0.11.0/24", "10.0.12.0/24"]
           private_subnets = ["10.0.21.0/24", "10.0.22.0/24"]
-          azs             = ["eu-west-1a", "eu-west-1b"]
-          region          = "eu-west-1"
+          azs             = ["us-east-1a", "us-east-1b"]
+          region          = "us-east-1"
           vpc_name        = "Custom-VPC"
           EOF
 
