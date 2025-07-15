@@ -1,4 +1,4 @@
-name: Terraform Deploy
+name: Devlake deployment 
 
 on:
   workflow_dispatch:
@@ -59,21 +59,24 @@ jobs:
       - name: Run Checkov Security Scan
         run: checkov -d . --framework terraform
 
-      # - name: Generate Terraform Documentation
-      #   uses: terraform-docs/gh-actions@v1.4.1
-      #   with:
-      #     working-dir: .
-      #     output-file: README.md
-      #     output-method: inject
-      #     git-push: "true"
-      #     git-commit-message: "docs: Update Terraform documentation"
-      #     git-commit-author: "GitHub Actions <actions@github.com>"
-      #     git-commit-email: "actions@github.com"
-      #     git-branch: "main"
-      #     github-token: ${{ secrets.REPO_TOKEN }}
+      - name: Generate Terraform Documentation
+        uses: terraform-docs/gh-actions@v1.4.1
+        with:
+           working-dir: .
+           output-file: README.md
+           output-method: inject
+           git-push: "true"
+           git-commit-message: "docs: Update Terraform documentation"
+           git-commit-author: "GitHub Actions <actions@github.com>"
+           git-commit-email: "actions@github.com"
+           git-branch: "main"
+           github-token: ${{ secrets.REPO_TOKEN }}
         
       #- name: Terraform Plan
        # run: terraform plan
+       
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
 
-      - name: Terraform Destroy
-        run: terraform destroy -auto-approve
+      #- name: Terraform Destroy
+       # run: terraform destroy -auto-approve
