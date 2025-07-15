@@ -65,15 +65,15 @@ jobs:
            working-dir: .
            output-file: README.md
            output-method: inject
-      - name: Push changes manually
-        run: |
-          git config user.name "Pranjal8983"
-          git config user.email "pranjaldeka8983@gmail.com"
-          git add README.md
-          git commit -m "Update Terraform config"
-          git push origin main
-        env:
-         GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+     # - name: Push changes manually
+        # run: |
+        #   git config user.name "Pranjal8983"
+        #   git config user.email "pranjaldeka8983@gmail.com"
+        #   git add README.md
+        #   git commit -m "Update Terraform config"
+        #   git push origin main
+        # env:
+        #  GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
  
         
       #- name: Terraform Plan
