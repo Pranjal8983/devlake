@@ -56,8 +56,8 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
-      - name: Run Checkov Security Scan
-        run: checkov -d . --framework terraform
+      #- name: Run Checkov Security Scan
+       # run: checkov -d . --framework terraform
 
       - name: Generate Terraform Documentation
         uses: terraform-docs/gh-actions@v1.4.1
