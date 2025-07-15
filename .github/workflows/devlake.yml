@@ -22,13 +22,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # - name: Set up Python (for Checkov)
-      #   uses: actions/setup-python@v4
-      #   with:
-      #     python-version: '3.10'
+      - name: Set up Python (for Checkov)
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
-      # - name: Install Checkov
-      #   run: pip install checkov
+      - name: Install Checkov
+        run: pip install checkov
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
