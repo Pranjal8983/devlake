@@ -66,9 +66,9 @@ jobs:
            output-file: README.md
            output-method: inject
            git-push: "true"
-           git-commit-message: "docs: Update Terraform documentation"
-           git-commit-author: "GitHub Actions <actions@github.com>"
-           git-commit-email: "actions@github.com"
+           git-push-user-name: "Pranjal8983"
+           git-push-user-email: "pranjaldeka8983@gmail.com"
+           git-commit-message: "Update Terraform config"
            git-branch: "main"
            github-token: ${{ secrets.REPO_TOKEN }}
         
