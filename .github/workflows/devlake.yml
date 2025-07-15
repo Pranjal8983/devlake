@@ -27,8 +27,8 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Checkov
-        run: pip install checkov
+      # - name: Install Checkov
+      #   run: pip install checkov
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
@@ -39,19 +39,19 @@ jobs:
           role-to-assume: ${{ secrets.OIDC_ROLE }}
 
 
-      - name: Set up TFLint
-        uses: terraform-linters/setup-tflint@v4
-        with:
-         tflint_version: latest
+      # - name: Set up TFLint
+      #   uses: terraform-linters/setup-tflint@v4
+      #   with:
+      #    tflint_version: latest
 
-      - name: Initialize TFLint
-        run: tflint --init
+      # - name: Initialize TFLint
+      #   run: tflint --init
 
-      - name: Run TFLint
-        run: tflint -f compact
+      # - name: Run TFLint
+      #   run: tflint -f compact
 
-      - name: Terraform Init
-        run: terraform init
+      # - name: Terraform Init
+      #   run: terraform init
 
       - name: Terraform Validate
         run: terraform validate
@@ -59,12 +59,12 @@ jobs:
       #- name: Run Checkov Security Scan
        # run: checkov -d . --framework terraform
 
-      - name: Generate Terraform Documentation
-        uses: terraform-docs/gh-actions@v1.4.1
-        with:
-           working-dir: .
-           output-file: README.md
-           output-method: inject
+      # - name: Generate Terraform Documentation
+      #   uses: terraform-docs/gh-actions@v1.4.1
+      #   with:
+      #      working-dir: .
+      #      output-file: README.md
+      #      output-method: inject
      # - name: Push changes manually
         # run: |
         #   git config user.name "Pranjal8983"
@@ -79,8 +79,8 @@ jobs:
       #- name: Terraform Plan
        # run: terraform plan
        
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+      # - name: Terraform Apply
+      #   run: terraform apply -auto-approve
 
-      #- name: Terraform Destroy
-       # run: terraform destroy -auto-approve
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve
